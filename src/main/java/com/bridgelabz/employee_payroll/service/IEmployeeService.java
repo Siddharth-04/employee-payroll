@@ -9,4 +9,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface IEmployeeService {
     public ResponseEntity<Employee> createEmployee(@RequestBody EmployeeDTO employee);
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id);
+    public ResponseEntity<Employee> updateEmployeeById(@PathVariable Long id,@RequestBody EmployeeDTO employee);
 }

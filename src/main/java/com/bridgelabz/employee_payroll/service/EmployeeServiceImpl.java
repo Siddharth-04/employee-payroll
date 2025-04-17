@@ -42,4 +42,22 @@ public class EmployeeServiceImpl implements IEmployeeService{
 
         return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     }
+
+    @Override
+    public ResponseEntity<Employee> updateEmployeeById(Long id, EmployeeDTO employee) {
+        Optional<Employee> obj= employeeRepository.findById(id);
+
+        if(obj.isPresent()){
+            Employee em = obj.get();
+
+            if(em.getName() != null) em.setName(employee.getName());
+            if(em.getDepartment() != null) em.setDepartment(employee.getDepartment());
+            if(em.getSalary() != 0) employee.setSalary(employee.getSalary());
+            employeeRepository.save(em);
+            return new ResponseEntity<Employee>(em,HttpStatus.OK);
+        }
+
+
+        return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+    }
 }
