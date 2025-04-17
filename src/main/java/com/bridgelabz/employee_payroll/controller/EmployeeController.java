@@ -1,6 +1,7 @@
 package com.bridgelabz.employee_payroll.controller;
 
 import com.bridgelabz.employee_payroll.dto.EmployeeDTO;
+import com.bridgelabz.employee_payroll.dto.ResponseDTO;
 import com.bridgelabz.employee_payroll.model.Employee;
 import com.bridgelabz.employee_payroll.service.EmployeeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/updatebyid/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id,@RequestBody EmployeeDTO employee){
+    public ResponseDTO updateEmployee(@PathVariable Long id, @RequestBody EmployeeDTO employee){
         return employeeService.updateEmployeeById(id,employee);
     }
 

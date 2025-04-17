@@ -1,6 +1,7 @@
 package com.bridgelabz.employee_payroll.service;
 
 import com.bridgelabz.employee_payroll.dto.EmployeeDTO;
+import com.bridgelabz.employee_payroll.dto.ResponseDTO;
 import com.bridgelabz.employee_payroll.model.Employee;
 import com.bridgelabz.employee_payroll.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class EmployeeServiceImpl implements IEmployeeService{
     }
 
     @Override
-    public ResponseEntity<Employee> updateEmployeeById(Long id, EmployeeDTO employee) {
+    public ResponseDTO updateEmployeeById(Long id, EmployeeDTO employee) {
         Optional<Employee> obj= employeeRepository.findById(id);
 
         if(obj.isPresent()){
@@ -54,11 +55,11 @@ public class EmployeeServiceImpl implements IEmployeeService{
             if(em.getDepartment() != null) em.setDepartment(employee.getDepartment());
             if(em.getSalary() != 0) employee.setSalary(employee.getSalary());
             employeeRepository.save(em);
-            return new ResponseEntity<Employee>(em,HttpStatus.OK);
+            return new ResponseDTO("User details updated",HttpStatus.OK);
         }
 
 
-        return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        return new ResponseDTO("User not found with this ID",HttpStatus.NOT_FOUND);
     }
 
     @Override
