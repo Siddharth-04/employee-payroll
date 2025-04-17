@@ -60,4 +60,18 @@ public class EmployeeServiceImpl implements IEmployeeService{
 
         return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     }
+
+    @Override
+    public ResponseEntity<String> deleteEmployeeById(Long id) {
+        Optional<Employee> obj = employeeRepository.findById(id);
+
+        if(obj.isPresent()){
+            employeeRepository.deleteById(id);
+            return new ResponseEntity<>("User deleted with id "+id,HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>("User not found with id "+id,HttpStatus.NOT_FOUND);
+    }
+
+
 }
