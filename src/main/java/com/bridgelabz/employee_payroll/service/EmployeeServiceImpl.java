@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class EmployeeServiceImpl implements IEmployeeService{
 
@@ -27,5 +29,17 @@ public class EmployeeServiceImpl implements IEmployeeService{
         }
 
         return new ResponseEntity<>(newEmployee, HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public ResponseEntity<Employee> getEmployeeById(Long id) {
+        Optional<Employee> obj = employeeRepository.findById(id);
+
+        if(obj.isPresent()){
+            Employee emp = obj.get();
+            return new ResponseEntity<>(emp,HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     }
 }
