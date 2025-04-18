@@ -19,17 +19,9 @@ public class EmployeeServiceImpl implements IEmployeeService{
 
     @Override
     public ResponseEntity<Employee> createEmployee(EmployeeDTO employee) {
-        Employee newEmployee = new Employee();
-        newEmployee.setName(employee.getName());
-        newEmployee.setDepartment(employee.getDepartment());
-        newEmployee.setSalary(employee.getSalary());
-
-        if(newEmployee.getName() != null && (newEmployee.getSalary() != 0)){
-            employeeRepository.save(newEmployee);
-            return new ResponseEntity<>(newEmployee, HttpStatus.CREATED);
-        }
-
-        return new ResponseEntity<>(newEmployee, HttpStatus.BAD_REQUEST);
+        Employee newEmployee = new Employee(employee);
+        employeeRepository.save(newEmployee);
+        return new ResponseEntity<>(newEmployee, HttpStatus.CREATED);
     }
 
     @Override
@@ -51,9 +43,14 @@ public class EmployeeServiceImpl implements IEmployeeService{
         if(obj.isPresent()){
             Employee em = obj.get();
 
-            if(em.getName() != null) em.setName(employee.getName());
-            if(em.getDepartment() != null) em.setDepartment(employee.getDepartment());
-            if(em.getSalary() != 0) employee.setSalary(employee.getSalary());
+            if (employee.getName() != null) em.setName(employee.getName());
+            if (employee.getSalary() != 0) em.setSalary(employee.getSalary());
+            if (employee.getDepartments() != null) em.setDepartments(employee.getDepartments());
+            if (employee.getGender() != null) em.setGender(employee.getGender());
+            if (employee.getNote() != null) em.setNote(employee.getNote());
+            if (employee.getProfilePic() != null) em.setProfilePic(employee.getProfilePic());
+            if (employee.getStartDate() != null) em.setStartDate(employee.getStartDate());
+
             employeeRepository.save(em);
             return new ResponseDTO("User details updated",HttpStatus.OK);
         }
